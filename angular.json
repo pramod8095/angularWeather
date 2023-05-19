@@ -93,6 +93,14 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@netlify-builder/deploy:deploy",
+          "options": {
+            "outputPath": "dist/weather",
+            "netlifyToken": "2Iv2JSJlAYSEot1wHtSyHeBzg474M2CO5z9QVlUHcYg",
+            "siteId": "43e1108b-4ef3-4129-9ea7-e1e16f828b05"
+          }
         }
       }
     }
