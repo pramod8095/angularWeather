@@ -1,0 +1,253 @@
+<style>
+  .hero {
+    padding: 2rem;
+  }
+
+  .icon {
+    font-size: 35px;
+  }
+
+  .imgIcon {
+    size: 30px;
+  }
+
+  .container {
+    display: flex;
+    align-items: center;
+  }
+
+  .container img {
+    width: 100px;
+    height: auto;
+    margin-right: 10px;
+  }
+
+  .inputText {
+    width: 350px;
+    height: 30px;
+    background: transparent;
+    color: black;
+    border-color: white;
+    margin-left: 60%;
+    font-size: 12px;
+  }
+
+  .inputText :focus {
+    border-color: white;
+  }
+
+  .weather-report {
+    display: flex;
+  }
+
+  .tab-container {
+    padding-left: 5rem;
+    font-size: 12px;
+    border-color: black;
+    height: 400px;
+    flex: 1;
+  }
+
+  .timeBar {
+    font-size: 18px;
+    padding-right: 5rem;
+    color: black;
+  }
+
+  .footer-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20%;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+}
+
+.box img {
+  width: 50px;
+  height: 50px;
+  margin-right: 5px;
+}
+
+.box p {
+  margin: 0;
+  font-size: 14px;
+  color: black;
+}
+
+
+  .data {
+    font-size: 24px;
+  }
+  .city{
+    font-size: 34px;
+    padding: 4rem;
+  }
+  .temp{
+    align-items: center;
+    font-size: 50px;
+    padding-left: 50% ;
+  }
+
+
+.search-item {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  padding-left: 6rem;
+  border-radius: 5px;
+  font-size: 24px;
+}
+
+.search-item-term {
+  margin-right: 5px;
+  white-space: nowrap;
+
+  padding-left: 2rem;
+}
+
+.search-item-icon {
+  width: 60px;
+  height: 60px;
+  margin-right: 5px;
+  padding-left: 8rem;
+}
+
+.search-item-details {
+  white-space: nowrap;
+  padding-left: 8rem;
+}
+.search-item-desc{
+  padding-left: 8rem;
+}
+.favorite-checkbox{
+  font-size: 24px;
+}
+
+</style>
+<div class="hero">
+
+  <div class="container">
+    <img src="../../assets/cloud.png" class="imgIcon" />
+    <span class="icon">
+      Weather
+    </span>
+
+    <input type="text" placeholder="Search City" class="inputText" [(ngModel)]="inputValue"/>
+    <button  mat-raised-button (click)="logInput()">Go</button>
+
+  </div>
+
+
+</div>
+<div class="weather-report">
+  <div class="tab-container">
+    <mat-tab-group dynamicHeight>
+
+      <mat-tab label="HOME">
+        <div class="city">
+          {{City}}, {{Country}}
+        </div>
+        <label class="favorite-checkbox" *ngIf="City && Country">
+          <input type="checkbox" [(ngModel)]="isFavorite" (change)="toggleFavorite()" />
+          <span class="heart-checkbox">Add to favourite</span>
+        </label>
+        <div class="temp">
+          <img src={{Icon}}/> <br/><br/>
+         {{Tempeture}} °C <br/><br/>
+         <span class="data">{{WeatherDesc}}</span>
+
+        </div>
+        <div class="example-large-box">
+
+          <footer>
+            <div class="footer-main">
+              <div class="box">
+                <img src="../../../assets/temp.png" />
+                <p>
+                  Min-Max <br />
+                  <span class="data">{{MaxTemp}}°-{{MinTemp}}°</span>
+                </p>
+              </div>
+              <div class="box">
+                <img src="../../../assets/clouds.png" />
+                <p>
+                  Precipitation <br />
+                  <span class="data">0%</span>
+                </p>
+
+              </div>
+              <div class="box">
+                <img src="../../../assets/humidity.png" />
+                <p>
+                  Humidity <br />
+                  <span class="data">{{Humidity}}%</span>
+                </p>
+
+              </div>
+              <div class="box">
+                <img src="../../../assets/air.png" />
+                <p>
+                  Wind<br />
+                  <span class="data">{{Wind}} mph</span>
+                </p>
+
+              </div>
+              <div class="box">
+                <img src="../../../assets/visibilit.png" />
+                <p>
+                  Visibility <br />
+                  <span class="data">{{Visibility}} mph</span>
+                </p>
+
+              </div>
+
+
+            </div>
+          </footer>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="FAVORITE" >
+        <div class="example-large-box mat-elevation-z4">
+          <ul>
+            <li *ngFor="let favorite of favoriteList">
+              <div class="search-item">
+                <span class="search-item-term">{{ favorite.term }}</span>
+                <img [src]="favorite.icon" class="search-item-icon" />
+                <div class="search-item-details">
+                  <span class="search-item-temp">{{ favorite.temp }} °C</span>
+                  <span class="search-item-desc">{{ favorite.description }}</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </mat-tab>
+      <mat-tab label="RECENT SEARCH">
+        <div class="example-large-box mat-elevation-z4">
+          <ul>
+            <li *ngFor="let search of searchHistory">
+              <div class="search-item">
+                <span class="search-item-term">{{ search.term }}</span>
+                <img [src]="search.icon" class="search-item-icon" />
+                <div class="search-item-details">
+                  <span class="search-item-temp">{{ search.temp }} °C</span>
+                  <span class="search-item-desc">{{ search.description }}</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </mat-tab>
+
+
+    </mat-tab-group>
+  </div>
+  <span class="timeBar">{{output}}</span>
+</div>
+
+
